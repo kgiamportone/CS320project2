@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <math.h>
+#include <algorithm>
 
 using namespace std;
 
@@ -89,7 +90,7 @@ void set_associative(char * input_file, FILE * output_file, unsigned long long w
     // printf("Index bits: %llu, tag bits: %llu\n", index_bits, tag_bits);
 
     // create vector of int vectors for LRU ways
-    vector<vector<int>> lru(num_sets, vector<int>(ways));
+    vector<vector<unsigned long long>> lru(num_sets, vector<unsigned long long>(ways));
 
     for (unsigned long long i = 0; i < num_sets; i++) {
         for (unsigned long long j = 0; j < ways; j++) {
@@ -122,7 +123,7 @@ void set_associative(char * input_file, FILE * output_file, unsigned long long w
                 hits++;
                 flag = 1;
                 // update LRU!!!
-                for (int j = 0; j < ways; j++) {
+                for (unsigned long long j = 0; j < ways; j++) {
                     if (lru[index][j] == i) { // found way
                         lru[index].erase(lru[index].begin() + j);
                         lru[index].push_back(i);
@@ -240,7 +241,7 @@ void set_associative_no_wm(char * input_file, FILE * output_file, unsigned long 
     unsigned long long index_bits = log2(num_sets);
     printf("Set associative with %llu ways, %llu sets \n", ways, num_sets);
 
-    vector<vector<int>> lru(num_sets, vector<int>(ways));
+    vector<vector<unsigned long long>> lru(num_sets, vector<unsigned long long>(ways));
 
     for (unsigned long long i = 0; i < num_sets; i++) {
         for (unsigned long long j = 0; j < ways; j++) {
@@ -273,7 +274,7 @@ void set_associative_no_wm(char * input_file, FILE * output_file, unsigned long 
                 hits++;
                 flag = 1;
                 // update LRU!!!
-                for (int j = 0; j < ways; j++) {
+                for (unsigned long long j = 0; j < ways; j++) {
                     if (lru[index][j] == i) { // found way
                         lru[index].erase(lru[index].begin() + j);
                         lru[index].push_back(i);
@@ -302,7 +303,7 @@ void prefetch(char * input_file, FILE * output_file, unsigned long long ways) {
     unsigned long long index_bits = log2(num_sets);
     printf("Set associative with %llu ways, %llu sets \n", ways, num_sets);
 
-    vector<vector<int>> lru(num_sets, vector<int>(ways));
+    vector<vector<unsigned long long>> lru(num_sets, vector<unsigned long long>(ways));
 
     for (unsigned long long i = 0; i < num_sets; i++) {
         for (unsigned long long j = 0; j < ways; j++) {
@@ -335,7 +336,7 @@ void prefetch(char * input_file, FILE * output_file, unsigned long long ways) {
                 hits++;
                 flag = 1;
                 // update LRU!!!
-                for (int j = 0; j < ways; j++) {
+                for (unsigned long long j = 0; j < ways; j++) {
                     if (lru[index][j] == i) { // found way
                         lru[index].erase(lru[index].begin() + j);
                         lru[index].push_back(i);
@@ -361,7 +362,7 @@ void prefetch(char * input_file, FILE * output_file, unsigned long long ways) {
                 // hits++;
                 flag = 1;
                 // update LRU!!!
-                for (int j = 0; j < ways; j++) {
+                for (unsigned long long j = 0; j < ways; j++) {
                     if (lru[index][j] == i) { // found way
                         lru[index].erase(lru[index].begin() + j);
                         lru[index].push_back(i);
@@ -389,7 +390,7 @@ void prefetch_miss(char * input_file, FILE * output_file, unsigned long long way
     unsigned long long index_bits = log2(num_sets);
     printf("Set associative with %llu ways, %llu sets \n", ways, num_sets);
 
-    vector<vector<int>> lru(num_sets, vector<int>(ways));
+    vector<vector<unsigned long long>> lru(num_sets, vector<unsigned long long>(ways));
 
     for (unsigned long long i = 0; i < num_sets; i++) {
         for (unsigned long long j = 0; j < ways; j++) {
@@ -422,7 +423,7 @@ void prefetch_miss(char * input_file, FILE * output_file, unsigned long long way
                 hits++;
                 flag = 1;
                 // update LRU!!!
-                for (int j = 0; j < ways; j++) {
+                for (unsigned long long j = 0; j < ways; j++) {
                     if (lru[index][j] == i) { // found way
                         lru[index].erase(lru[index].begin() + j);
                         lru[index].push_back(i);
@@ -447,7 +448,7 @@ void prefetch_miss(char * input_file, FILE * output_file, unsigned long long way
                     // hits++;
                     flag = 1;
                     // update LRU!!!
-                    for (int j = 0; j < ways; j++) {
+                    for (unsigned long long j = 0; j < ways; j++) {
                         if (lru[index][j] == i) { // found way
                             lru[index].erase(lru[index].begin() + j);
                             lru[index].push_back(i);
